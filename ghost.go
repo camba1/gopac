@@ -1,3 +1,4 @@
+// Contains logic for controlling the ghosts
 package main
 
 import (

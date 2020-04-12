@@ -1,3 +1,4 @@
+// Contains logic for controlling placement of the coins
 package main
 
 import "github.com/faiface/pixel"

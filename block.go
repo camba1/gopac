@@ -1,3 +1,4 @@
+// Contains logic for defining the obstacles (blocks) in the game
 package main
 
 import (

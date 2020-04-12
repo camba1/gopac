@@ -1,3 +1,4 @@
+// Contains logic for game levels
 package main
 
 type world struct {
