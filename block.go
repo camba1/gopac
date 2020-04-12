@@ -5,6 +5,8 @@ import (
 	"github.com/faiface/pixel"
 )
 
+// block: structure that defines obstacles (blocks) thar impeded our
+// hero's progress
 type block struct {
 	frame pixel.Rect
 	sheet pixel.Picture
@@ -12,6 +14,7 @@ type block struct {
 	gridY int
 }
 
+//draw: draw our blocks ar certain coordinates
 func (blk block) draw(t pixel.Target) {
 	sprite := pixel.NewSprite(nil, pixel.Rect{})
 	sprite.Set(blk.sheet, blk.frame)
