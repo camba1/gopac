@@ -1,4 +1,3 @@
-// Contains logic for game levels
 package main
 
 // world: main structure containing all the main elements of our game
@@ -12,6 +11,7 @@ type world struct {
 	gameOver       bool      // Indicates if the game is over
 }
 
+// World: Main implementation game state. Contains references, among other things, to the ghosts, pacman and board that currently exist in the game
 var World = &world{}
 
 // worldMapLvl: Contains the initial setup for our game level.

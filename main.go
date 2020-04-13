@@ -1,4 +1,3 @@
-// Main package that runs the application
 package main
 
 // Need to get github.com/faiface/glhf

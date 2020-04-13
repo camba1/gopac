@@ -1,4 +1,3 @@
-// Contains logic for defining and updating the game board
 package main
 
 import "github.com/faiface/pixel"

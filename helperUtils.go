@@ -1,4 +1,3 @@
-// Helper functions to draw the different sprites on the screen
 package main
 
 import (

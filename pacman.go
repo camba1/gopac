@@ -1,4 +1,3 @@
-// Defines and controls our hero
 package main
 
 import (
