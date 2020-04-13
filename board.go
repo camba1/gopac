@@ -3,15 +3,19 @@ package main
 
 import "github.com/faiface/pixel"
 
+// board: Holds the pixel.picture representation of the game board
 type board struct {
 	sheet pixel.Picture
 }
 
+// load: Loads a given pixel.Picture into the board sheet
 func (brd *board) load(sheet pixel.Picture) error {
 	brd.sheet = sheet
 	return nil
 }
 
+// draw: Take the coins and blocks information stored in the World struct and draw them in the
+// and draw them in board based on World.worldMap level information
 func (brd *board) draw(t pixel.Target) error {
 	var coinCount int
 	worldMap := World.worldMap
@@ -33,6 +37,7 @@ func (brd *board) draw(t pixel.Target) error {
 	return nil
 }
 
+//loadable: Interface to load a pixelPicture)
 type loadable interface {
 	load(pixel.Picture) error
 }
