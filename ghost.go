@@ -7,6 +7,7 @@ import (
 	"math/rand"
 )
 
+//ghost: Structure that holds all the information about the ghost to be drawn in the screen
 type ghost struct {
 	direction Direction                  //Direction the ghost is facing
 	anims     map[Direction][]pixel.Rect //fames map
@@ -15,10 +16,12 @@ type ghost struct {
 	sheet     pixel.Picture              //sprite sheet in pixel picture format
 	gridX     int                        // X position in grid
 	gridY     int                        // Y position in grid
-	spriteRow int
-	spriteCol int
+	spriteRow int                        // Row for the Sprite
+	spriteCol int                        // Column for the Sprite
 }
 
+// Load the animation frames to be used for each direction the ghost needs to move and loads it to the
+// ghost.anims map
 func (gh *ghost) load(sheet pixel.Picture) error {
 	gh.sheet = sheet
 	gh.direction = right
@@ -35,6 +38,7 @@ func (gh *ghost) load(sheet pixel.Picture) error {
 	return nil
 }
 
+// draw: Determines the ghost frame that needs to be loaded as well as where it needs to be drawn
 func (gh *ghost) draw(t pixel.Target) {
 	sprite := pixel.NewSprite(nil, pixel.Rect{})
 	sprite.Set(gh.sheet, gh.frame)
@@ -47,6 +51,7 @@ func (gh *ghost) draw(t pixel.Target) {
 	)
 }
 
+// Check if ghost if colliding with the game boundaries
 func (gh *ghost) isCollidingWithWall(gridX, gridY int) bool {
 	return gridX < 0 || gridX >= len(World.worldMap[0]) ||
 		gridY < 0 || gridY > len(World.worldMap) ||
@@ -54,10 +59,33 @@ func (gh *ghost) isCollidingWithWall(gridX, gridY int) bool {
 
 }
 
+// Check if the ghost caught our hero
 func (gh *ghost) isCollidingWithPacMan() bool {
 	return World.pm.gridX == gh.gridX && World.pm.gridY == gh.gridY
 }
 
+// Determine the directions the ghost could move without running into a wall
+// returns a slice with all the valid directions
+func (gh *ghost) getPossibleMoves(oldGridx, oldGridy int) []Direction {
+	gh.gridX = oldGridx
+	gh.gridY = oldGridy
+	possible := make([]Direction, 0)
+	if World.worldMap[gh.gridY+1][gh.gridX] != 0 {
+		possible = append(possible, up)
+	}
+	if World.worldMap[gh.gridY-1][gh.gridX] != 0 {
+		possible = append(possible, down)
+	}
+	if World.worldMap[gh.gridY][gh.gridX+1] != 0 {
+		possible = append(possible, right)
+	}
+	if World.worldMap[gh.gridY][gh.gridX-1] != 0 {
+		possible = append(possible, left)
+	}
+	return possible
+}
+
+// update the driection the host is moving and detect if the game is over
 func (gh *ghost) update(dt float64) {
 	directionValue := gh.direction
 	oldGridx := gh.gridX
@@ -72,22 +100,8 @@ func (gh *ghost) update(dt float64) {
 		gh.gridY -= 1
 	}
 	if gh.isCollidingWithWall(gh.gridX, gh.gridY) {
-		gh.gridX = oldGridx
-		gh.gridY = oldGridy
-		possible := make([]Direction, 0)
-		if World.worldMap[gh.gridY+1][gh.gridX] != 0 {
-			possible = append(possible, up)
-		}
-		if World.worldMap[gh.gridY-1][gh.gridX] != 0 {
-			possible = append(possible, down)
-		}
-		if World.worldMap[gh.gridY][gh.gridX+1] != 0 {
-			possible = append(possible, right)
-		}
-		if World.worldMap[gh.gridY][gh.gridX-1] != 0 {
-			possible = append(possible, left)
-		}
-		gh.direction = possible[rand.Intn(len(possible))]
+		possibleMoves := gh.getPossibleMoves(oldGridx, oldGridy)
+		gh.direction = possibleMoves[rand.Intn(len(possibleMoves))]
 	}
 
 	if gh.isCollidingWithPacMan() {
