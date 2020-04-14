@@ -39,7 +39,7 @@ const (
 const defaultRate float64 = 1 / 5.0
 
 //loadBoard: Main function to load game objects (ghosts, world setup
-// in the wolrd map and ready to be drawn
+// in the world map and ready to be drawn
 func loadBoard(pm *pacman, sheet pixel.Picture, brd *board) {
 	gh1 := &ghost{gridX: 5, gridY: 10, rate: defaultRate, spriteRow: 0, spriteCol: 0}
 	gh2 := &ghost{gridX: 15, gridY: 14, rate: defaultRate, spriteRow: 1, spriteCol: 0}
