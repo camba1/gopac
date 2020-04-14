@@ -27,3 +27,11 @@ then run can run the application by running:
 ```
 
 Note that I have only run this in my Mac
+
+### Testing
+
+Created a few tests just o play with the go default engine. The tests can be run using:
+
+```
+ go test
+```
