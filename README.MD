@@ -14,7 +14,7 @@ To get the pixel library properly, I have to first install the followingin my Ma
 
 ### Running
 
-To build the application, run:
+To build the application, execute the following command:
 
 ```
 go build
